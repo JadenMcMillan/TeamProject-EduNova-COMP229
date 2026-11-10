@@ -1,0 +1,102 @@
+MongoDB shell version v8.3.11
+connecting to: mongodb://127.0.0.1:27017/edunova_lms
+
+> show dbs
+admin          40.00 KiB
+config         12.00 KiB
+edunova_lms    360.00 KiB
+
+> use edunova_lms
+switched to db edunova_lms
+
+> show collections
+courses
+enrollments
+lessons
+users
+
+> db.users.countDocuments({ role: "instructor" })
+2
+
+> db.users.findOne({ role: "instructor" }, { name: 1, email: 1, role: 1 })
+{
+  _id: ObjectId('6ae5502416e18eac0ef51378'),
+  name: 'Prof. Kwame Boateng',
+  email: 'kwame@edunova.dev',
+  role: 'instructor'
+}
+
+> db.courses.find({ published: true }, { title: 1, code: 1, price: 1 }).limit(3)
+[
+  {
+    _id: ObjectId('6ae5502416e18eac0ef5137b'),
+    title: 'Modern Web Development with Node.js',
+    code: 'WEB-101',
+    price: 149
+  },
+  {
+    _id: ObjectId('6ae5502416e18eac0ef5137d'),
+    title: 'UI Design Systems in Figma',
+    code: 'DES-110',
+    price: 79
+  },
+  {
+    _id: ObjectId('6ae5502416e18eac0ef5137c'),
+    title: 'Data Analysis Foundations with Python',
+    code: 'DAT-201',
+    price: 99
+  }
+]
+
+> db.courses.getIndexes()
+[
+  {
+    name: '_id_',
+    key: {
+      _id: 1
+    },
+    unique: false
+  },
+  {
+    name: 'code_1',
+    key: {
+      code: 1
+    },
+    unique: true
+  },
+  {
+    name: 'instructor_1',
+    key: {
+      instructor: 1
+    },
+    unique: false
+  },
+  {
+    name: 'title_text_description_text',
+    key: {
+      _fts: 'text',
+      _ftsx: 1
+    },
+    unique: false
+  },
+  {
+    name: 'category_1_level_1',
+    key: {
+      category: 1,
+      level: 1
+    },
+    unique: false
+  }
+]
+
+> db.enrollments.aggregate([{ $group: { _id: "$status", n: { $sum: 1 } } }])
+[
+  {
+    _id: 'completed',
+    n: 1
+  },
+  {
+    _id: 'active',
+    n: 2
+  }
+]

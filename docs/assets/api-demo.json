@@ -1,0 +1,898 @@
+{
+  "generatedAt": "2026-10-31T02:24:39.779Z",
+  "baseUrl": "http://localhost:5000",
+  "steps": [
+    {
+      "title": "Service health check",
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 52,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "status": "UP",
+        "uptimeSeconds": 40,
+        "environment": "development",
+        "timestamp": "2026-10-31T02:24:39.366Z"
+      },
+      "group": "health"
+    },
+    {
+      "title": "Register student (amara@demo.dev)",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 409,
+      "statusText": "Conflict",
+      "passed": true,
+      "expected": [
+        201,
+        409
+      ],
+      "durationMs": 47,
+      "requestBody": {
+        "name": "Amara Diallo",
+        "email": "amara@demo.dev",
+        "password": "Password123",
+        "role": "student"
+      },
+      "responseBody": {
+        "success": false,
+        "message": "An account with that email already exists"
+      },
+      "group": "auth"
+    },
+    {
+      "title": "Login as student (amara@demo.dev)",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 85,
+      "requestBody": {
+        "email": "amara@demo.dev",
+        "password": "Password123"
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTU1MDQ2NDg5ZmVmYTA1ZGYwMDM2OCIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzkzNDEzNDc5LCJleHAiOjE3OTQwMTgyNzl9.DT5nXmI6P7C3kCzTNx8yc9OcyVT1qe0r4khWk4vxAQ0",
+        "data": {
+          "_id": "6ae55046489fefa05df00368",
+          "name": "Amara Diallo",
+          "email": "amara@demo.dev",
+          "role": "student",
+          "bio": "",
+          "avatarUrl": "",
+          "createdAt": "2026-10-31T02:19:50.727Z"
+        }
+      },
+      "group": "auth"
+    },
+    {
+      "title": "Login as instructor",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 66,
+      "requestBody": {
+        "email": "lena@edunova.dev",
+        "password": "Password123"
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Login successful",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZTU1MDI0MTZlMThlYWMwZWY1MTM3NyIsInJvbGUiOiJpbnN0cnVjdG9yIiwiaWF0IjoxNzkzNDEzNDc5LCJleHAiOjE3OTQwMTgyNzl9.X5e6VjXhmoYcU3Nr7pJy_qrPA7w5jSJbur2f_Re-viI",
+        "data": {
+          "_id": "6ae5502416e18eac0ef51377",
+          "name": "Dr. Lena Osei",
+          "email": "lena@edunova.dev",
+          "role": "instructor",
+          "bio": "Full-stack engineer, 9 years teaching web development.",
+          "avatarUrl": "",
+          "createdAt": "2026-10-31T02:19:16.363Z"
+        }
+      },
+      "group": "auth"
+    },
+    {
+      "title": "Read my profile with the JWT",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 7,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "data": {
+          "_id": "6ae55046489fefa05df00368",
+          "name": "Amara Diallo",
+          "email": "amara@demo.dev",
+          "role": "student",
+          "bio": "",
+          "avatarUrl": "",
+          "createdAt": "2026-10-31T02:19:50.727Z"
+        }
+      },
+      "group": "auth"
+    },
+    {
+      "title": "Protected route without a token (must fail)",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 401,
+      "statusText": "Unauthorized",
+      "passed": true,
+      "expected": 401,
+      "durationMs": 3,
+      "requestBody": null,
+      "responseBody": {
+        "success": false,
+        "message": "Not authorised: no token provided"
+      },
+      "group": "auth"
+    },
+    {
+      "title": "List my courses (instructor dashboard)",
+      "method": "GET",
+      "path": "/api/courses/mine",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 18,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "count": 3,
+        "data": [
+          {
+            "_id": "6ae55096489fefa05df00373",
+            "title": "REST API Testing with Postman and Jest",
+            "code": "API-300",
+            "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+            "category": "Web Development",
+            "level": "advanced",
+            "price": 109,
+            "capacity": 25,
+            "coverImageUrl": "",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "createdAt": "2026-10-31T02:21:10.552Z",
+            "updatedAt": "2026-10-31T02:21:10.582Z",
+            "__v": 0,
+            "enrollmentCount": 0,
+            "id": "6ae55096489fefa05df00373"
+          },
+          {
+            "_id": "6ae5502416e18eac0ef5137b",
+            "title": "Modern Web Development with Node.js",
+            "code": "WEB-101",
+            "description": "Build production-ready REST APIs with Node.js, Express and MongoDB. Covers routing, middleware, MVC structure, authentication with JWT, testing and deployment.",
+            "category": "Web Development",
+            "level": "intermediate",
+            "price": 149,
+            "capacity": 40,
+            "coverImageUrl": "",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "createdAt": "2026-10-31T02:19:16.640Z",
+            "updatedAt": "2026-10-31T02:19:16.640Z",
+            "__v": 0,
+            "enrollmentCount": 2,
+            "id": "6ae5502416e18eac0ef5137b"
+          },
+          {
+            "_id": "6ae5502416e18eac0ef5137d",
+            "title": "UI Design Systems in Figma",
+            "code": "DES-110",
+            "description": "Design a reusable component library from scratch: colour tokens, typography scales, auto-layout components and a documented handoff for developers.",
+            "category": "Design",
+            "level": "beginner",
+            "price": 79,
+            "capacity": 30,
+            "coverImageUrl": "",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "createdAt": "2026-10-31T02:19:16.640Z",
+            "updatedAt": "2026-10-31T02:19:16.640Z",
+            "__v": 0,
+            "enrollmentCount": 0,
+            "id": "6ae5502416e18eac0ef5137d"
+          }
+        ]
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Clean up previous demo course",
+      "method": "DELETE",
+      "path": "/api/courses/6ae55096489fefa05df00373",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 12,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "message": "Course deleted",
+        "data": {
+          "_id": "6ae55096489fefa05df00373",
+          "deletedLessons": 1,
+          "deletedEnrollments": 0
+        }
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Create a course (CREATE)",
+      "method": "POST",
+      "path": "/api/courses",
+      "status": 201,
+      "statusText": "Created",
+      "passed": true,
+      "expected": 201,
+      "durationMs": 14,
+      "requestBody": {
+        "title": "REST API Testing with Postman and Jest",
+        "code": "API-300",
+        "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+        "category": "Web Development",
+        "level": "advanced",
+        "price": 119,
+        "capacity": 25,
+        "published": true
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Course created",
+        "data": {
+          "title": "REST API Testing with Postman and Jest",
+          "code": "API-300",
+          "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+          "category": "Web Development",
+          "level": "advanced",
+          "price": 119,
+          "capacity": 25,
+          "coverImageUrl": "",
+          "published": true,
+          "instructor": "6ae5502416e18eac0ef51377",
+          "_id": "6ae551676835037d33ed5809",
+          "createdAt": "2026-10-31T02:24:39.628Z",
+          "updatedAt": "2026-10-31T02:24:39.628Z",
+          "__v": 0,
+          "id": "6ae551676835037d33ed5809"
+        }
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Add lesson 1 (nested CREATE)",
+      "method": "POST",
+      "path": "/api/courses/6ae551676835037d33ed5809/lessons",
+      "status": 201,
+      "statusText": "Created",
+      "passed": true,
+      "expected": 201,
+      "durationMs": 13,
+      "requestBody": {
+        "title": "Anatomy of an HTTP request",
+        "content": "Methods, status codes, headers, bodies and how Postman models each of them.",
+        "durationMinutes": 20
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Lesson created",
+        "data": {
+          "title": "Anatomy of an HTTP request",
+          "content": "Methods, status codes, headers, bodies and how Postman models each of them.",
+          "order": 1,
+          "durationMinutes": 20,
+          "videoUrl": "",
+          "course": "6ae551676835037d33ed5809",
+          "_id": "6ae551676835037d33ed580a",
+          "createdAt": "2026-10-31T02:24:39.642Z",
+          "updatedAt": "2026-10-31T02:24:39.642Z",
+          "__v": 0
+        }
+      },
+      "group": "lessons"
+    },
+    {
+      "title": "Add lesson 2 (nested CREATE)",
+      "method": "POST",
+      "path": "/api/courses/6ae551676835037d33ed5809/lessons",
+      "status": 201,
+      "statusText": "Created",
+      "passed": true,
+      "expected": 201,
+      "durationMs": 10,
+      "requestBody": {
+        "title": "Writing assertions for auth flows",
+        "content": "Chaining requests in a collection, extracting tokens and asserting 401/403 paths.",
+        "durationMinutes": 35
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Lesson created",
+        "data": {
+          "title": "Writing assertions for auth flows",
+          "content": "Chaining requests in a collection, extracting tokens and asserting 401/403 paths.",
+          "order": 2,
+          "durationMinutes": 35,
+          "videoUrl": "",
+          "course": "6ae551676835037d33ed5809",
+          "_id": "6ae551676835037d33ed580b",
+          "createdAt": "2026-10-31T02:24:39.652Z",
+          "updatedAt": "2026-10-31T02:24:39.652Z",
+          "__v": 0
+        }
+      },
+      "group": "lessons"
+    },
+    {
+      "title": "Browse the catalogue (READ, public)",
+      "method": "GET",
+      "path": "/api/courses?category=Web%20Development&sort=newest",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 10,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "count": 2,
+        "pagination": {
+          "page": 1,
+          "limit": 10,
+          "total": 2,
+          "pages": 1
+        },
+        "data": [
+          {
+            "_id": "6ae551676835037d33ed5809",
+            "title": "REST API Testing with Postman and Jest",
+            "code": "API-300",
+            "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+            "category": "Web Development",
+            "level": "advanced",
+            "price": 119,
+            "capacity": 25,
+            "coverImageUrl": "",
+            "published": true,
+            "instructor": {
+              "_id": "6ae5502416e18eac0ef51377",
+              "name": "Dr. Lena Osei",
+              "email": "lena@edunova.dev",
+              "role": "instructor",
+              "id": "6ae5502416e18eac0ef51377"
+            },
+            "createdAt": "2026-10-31T02:24:39.628Z",
+            "updatedAt": "2026-10-31T02:24:39.628Z",
+            "__v": 0,
+            "enrollmentCount": 0,
+            "id": "6ae551676835037d33ed5809",
+            "enrolled": false
+          },
+          {
+            "_id": "6ae5502416e18eac0ef5137b",
+            "title": "Modern Web Development with Node.js",
+            "code": "WEB-101",
+            "description": "Build production-ready REST APIs with Node.js, Express and MongoDB. Covers routing, middleware, MVC structure, authentication with JWT, testing and deployment.",
+            "category": "Web Development",
+            "level": "intermediate",
+            "price": 149,
+            "capacity": 40,
+            "coverImageUrl": "",
+            "published": true,
+            "instructor": {
+              "_id": "6ae5502416e18eac0ef51377",
+              "name": "Dr. Lena Osei",
+              "email": "lena@edunova.dev",
+              "role": "instructor",
+              "id": "6ae5502416e18eac0ef51377"
+            },
+            "createdAt": "2026-10-31T02:19:16.640Z",
+            "updatedAt": "2026-10-31T02:19:16.640Z",
+            "__v": 0,
+            "enrollmentCount": 2,
+            "id": "6ae5502416e18eac0ef5137b",
+            "enrolled": false
+          }
+        ]
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Read one course with lessons (READ)",
+      "method": "GET",
+      "path": "/api/courses/6ae551676835037d33ed5809",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 9,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "data": {
+          "_id": "6ae551676835037d33ed5809",
+          "title": "REST API Testing with Postman and Jest",
+          "code": "API-300",
+          "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+          "category": "Web Development",
+          "level": "advanced",
+          "price": 119,
+          "capacity": 25,
+          "coverImageUrl": "",
+          "published": true,
+          "instructor": {
+            "_id": "6ae5502416e18eac0ef51377",
+            "name": "Dr. Lena Osei",
+            "email": "lena@edunova.dev",
+            "role": "instructor",
+            "bio": "Full-stack engineer, 9 years teaching web development.",
+            "id": "6ae5502416e18eac0ef51377"
+          },
+          "createdAt": "2026-10-31T02:24:39.628Z",
+          "updatedAt": "2026-10-31T02:24:39.628Z",
+          "__v": 0,
+          "enrollmentCount": 0,
+          "id": "6ae551676835037d33ed5809",
+          "lessons": [
+            {
+              "_id": "6ae551676835037d33ed580a",
+              "title": "Anatomy of an HTTP request",
+              "content": "Methods, status codes, headers, bodies and how Postman models each of them.",
+              "order": 1,
+              "durationMinutes": 20,
+              "videoUrl": "",
+              "course": "6ae551676835037d33ed5809",
+              "createdAt": "2026-10-31T02:24:39.642Z",
+              "updatedAt": "2026-10-31T02:24:39.642Z",
+              "__v": 0
+            },
+            {
+              "_id": "6ae551676835037d33ed580b",
+              "title": "Writing assertions for auth flows",
+              "content": "Chaining requests in a collection, extracting tokens and asserting 401/403 paths.",
+              "order": 2,
+              "durationMinutes": 35,
+              "videoUrl": "",
+              "course": "6ae551676835037d33ed5809",
+              "createdAt": "2026-10-31T02:24:39.652Z",
+              "updatedAt": "2026-10-31T02:24:39.652Z",
+              "__v": 0
+            }
+          ],
+          "enrollment": null
+        }
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Update price and level (UPDATE)",
+      "method": "PUT",
+      "path": "/api/courses/6ae551676835037d33ed5809",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 9,
+      "requestBody": {
+        "price": 109,
+        "level": "advanced"
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Course updated",
+        "data": {
+          "_id": "6ae551676835037d33ed5809",
+          "title": "REST API Testing with Postman and Jest",
+          "code": "API-300",
+          "description": "Design a test plan for a REST API, automate it with Postman collections and verify authentication, authorisation and validation rules before every release.",
+          "category": "Web Development",
+          "level": "advanced",
+          "price": 109,
+          "capacity": 25,
+          "coverImageUrl": "",
+          "published": true,
+          "instructor": "6ae5502416e18eac0ef51377",
+          "createdAt": "2026-10-31T02:24:39.628Z",
+          "updatedAt": "2026-10-31T02:24:39.681Z",
+          "__v": 0,
+          "id": "6ae551676835037d33ed5809"
+        }
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Validation: invalid category (must fail)",
+      "method": "POST",
+      "path": "/api/courses",
+      "status": 400,
+      "statusText": "Bad Request",
+      "passed": true,
+      "expected": 400,
+      "durationMs": 7,
+      "requestBody": {
+        "title": "Course with a broken category",
+        "code": "BAD-404",
+        "description": "This payload is intentionally invalid to demonstrate schema validation.",
+        "category": "Underwater"
+      },
+      "responseBody": {
+        "success": false,
+        "message": "Validation failed",
+        "errors": [
+          {
+            "field": "category",
+            "message": "Category must be one of: Web Development, Data Science, Design, Business, Mathematics, Languages"
+          }
+        ]
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Authorisation: student creates a course (must fail)",
+      "method": "POST",
+      "path": "/api/courses",
+      "status": 403,
+      "statusText": "Forbidden",
+      "passed": true,
+      "expected": 403,
+      "durationMs": 4,
+      "requestBody": {
+        "title": "Student is not allowed to publish",
+        "code": "STU-100",
+        "description": "Attempting to create a course with a student token should return 403."
+      },
+      "responseBody": {
+        "success": false,
+        "message": "Forbidden: role 'student' cannot access this resource"
+      },
+      "group": "courses"
+    },
+    {
+      "title": "Enrol in the course (CREATE)",
+      "method": "POST",
+      "path": "/api/enrollments",
+      "status": 201,
+      "statusText": "Created",
+      "passed": true,
+      "expected": 201,
+      "durationMs": 15,
+      "requestBody": {
+        "courseId": "6ae551676835037d33ed5809"
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Enrolled successfully",
+        "data": {
+          "student": {
+            "_id": "6ae55046489fefa05df00368",
+            "name": "Amara Diallo",
+            "email": "amara@demo.dev",
+            "role": "student",
+            "id": "6ae55046489fefa05df00368"
+          },
+          "course": {
+            "_id": "6ae551676835037d33ed5809",
+            "title": "REST API Testing with Postman and Jest",
+            "code": "API-300",
+            "category": "Web Development",
+            "level": "advanced",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "id": "6ae551676835037d33ed5809"
+          },
+          "status": "active",
+          "progress": 0,
+          "grade": null,
+          "completedLessons": [],
+          "_id": "6ae551676835037d33ed580d",
+          "createdAt": "2026-10-31T02:24:39.704Z",
+          "updatedAt": "2026-10-31T02:24:39.704Z",
+          "__v": 0
+        }
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Duplicate enrolment (must fail)",
+      "method": "POST",
+      "path": "/api/enrollments",
+      "status": 409,
+      "statusText": "Conflict",
+      "passed": true,
+      "expected": 409,
+      "durationMs": 7,
+      "requestBody": {
+        "courseId": "6ae551676835037d33ed5809"
+      },
+      "responseBody": {
+        "success": false,
+        "message": "You are already enrolled in this course"
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Update progress (UPDATE)",
+      "method": "PUT",
+      "path": "/api/enrollments/6ae551676835037d33ed580d",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 13,
+      "requestBody": {
+        "progress": 50,
+        "completedLessons": [
+          "6ae551676835037d33ed580b"
+        ]
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Enrolment updated",
+        "data": {
+          "_id": "6ae551676835037d33ed580d",
+          "student": {
+            "_id": "6ae55046489fefa05df00368",
+            "name": "Amara Diallo",
+            "email": "amara@demo.dev",
+            "role": "student",
+            "id": "6ae55046489fefa05df00368"
+          },
+          "course": {
+            "_id": "6ae551676835037d33ed5809",
+            "title": "REST API Testing with Postman and Jest",
+            "code": "API-300",
+            "category": "Web Development",
+            "level": "advanced",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "id": "6ae551676835037d33ed5809"
+          },
+          "status": "active",
+          "progress": 50,
+          "grade": null,
+          "completedLessons": [
+            "6ae551676835037d33ed580b"
+          ],
+          "createdAt": "2026-10-31T02:24:39.704Z",
+          "updatedAt": "2026-10-31T02:24:39.724Z",
+          "__v": 1
+        }
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Student tries to grade himself (must fail)",
+      "method": "PUT",
+      "path": "/api/enrollments/6ae551676835037d33ed580d",
+      "status": 403,
+      "statusText": "Forbidden",
+      "passed": true,
+      "expected": 403,
+      "durationMs": 5,
+      "requestBody": {
+        "grade": 100
+      },
+      "responseBody": {
+        "success": false,
+        "message": "Only the course instructor can grade an enrolment"
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Instructor grades the enrolment (UPDATE)",
+      "method": "PUT",
+      "path": "/api/enrollments/6ae551676835037d33ed580d",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 10,
+      "requestBody": {
+        "grade": 91
+      },
+      "responseBody": {
+        "success": true,
+        "message": "Enrolment updated",
+        "data": {
+          "_id": "6ae551676835037d33ed580d",
+          "student": {
+            "_id": "6ae55046489fefa05df00368",
+            "name": "Amara Diallo",
+            "email": "amara@demo.dev",
+            "role": "student",
+            "id": "6ae55046489fefa05df00368"
+          },
+          "course": {
+            "_id": "6ae551676835037d33ed5809",
+            "title": "REST API Testing with Postman and Jest",
+            "code": "API-300",
+            "category": "Web Development",
+            "level": "advanced",
+            "published": true,
+            "instructor": "6ae5502416e18eac0ef51377",
+            "id": "6ae551676835037d33ed5809"
+          },
+          "status": "completed",
+          "progress": 50,
+          "grade": 91,
+          "completedLessons": [
+            "6ae551676835037d33ed580b"
+          ],
+          "createdAt": "2026-10-31T02:24:39.704Z",
+          "updatedAt": "2026-10-31T02:24:39.742Z",
+          "__v": 1
+        }
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "My learning list (READ)",
+      "method": "GET",
+      "path": "/api/enrollments/me",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 8,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "count": 1,
+        "pagination": {
+          "page": 1,
+          "limit": 10,
+          "total": 1,
+          "pages": 1
+        },
+        "data": [
+          {
+            "_id": "6ae551676835037d33ed580d",
+            "student": {
+              "_id": "6ae55046489fefa05df00368",
+              "name": "Amara Diallo",
+              "email": "amara@demo.dev",
+              "role": "student",
+              "id": "6ae55046489fefa05df00368"
+            },
+            "course": {
+              "_id": "6ae551676835037d33ed5809",
+              "title": "REST API Testing with Postman and Jest",
+              "code": "API-300",
+              "category": "Web Development",
+              "level": "advanced",
+              "published": true,
+              "instructor": "6ae5502416e18eac0ef51377",
+              "id": "6ae551676835037d33ed5809"
+            },
+            "status": "completed",
+            "progress": 50,
+            "grade": 91,
+            "completedLessons": [
+              "6ae551676835037d33ed580b"
+            ],
+            "createdAt": "2026-10-31T02:24:39.704Z",
+            "updatedAt": "2026-10-31T02:24:39.742Z",
+            "__v": 1
+          }
+        ]
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Instructor course roster (READ)",
+      "method": "GET",
+      "path": "/api/courses/6ae551676835037d33ed5809/enrollments",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 8,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "summary": {
+          "total": 1,
+          "active": 1,
+          "completed": 1,
+          "avgProgress": 50,
+          "avgGrade": 91
+        },
+        "data": [
+          {
+            "_id": "6ae551676835037d33ed580d",
+            "student": {
+              "_id": "6ae55046489fefa05df00368",
+              "name": "Amara Diallo",
+              "email": "amara@demo.dev",
+              "id": "6ae55046489fefa05df00368"
+            },
+            "course": "6ae551676835037d33ed5809",
+            "status": "completed",
+            "progress": 50,
+            "grade": 91,
+            "completedLessons": [
+              "6ae551676835037d33ed580b"
+            ],
+            "createdAt": "2026-10-31T02:24:39.704Z",
+            "updatedAt": "2026-10-31T02:24:39.742Z",
+            "__v": 1
+          }
+        ]
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Delete lesson 2 (DELETE, nested)",
+      "method": "DELETE",
+      "path": "/api/courses/6ae551676835037d33ed5809/lessons/6ae551676835037d33ed580b",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 7,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "message": "Lesson deleted",
+        "data": {
+          "_id": "6ae551676835037d33ed580b"
+        }
+      },
+      "group": "lessons"
+    },
+    {
+      "title": "Drop the enrolment (DELETE)",
+      "method": "DELETE",
+      "path": "/api/enrollments/6ae551676835037d33ed580d",
+      "status": 200,
+      "statusText": "OK",
+      "passed": true,
+      "expected": 200,
+      "durationMs": 6,
+      "requestBody": null,
+      "responseBody": {
+        "success": true,
+        "message": "Enrolment removed",
+        "data": {
+          "_id": "6ae551676835037d33ed580d"
+        }
+      },
+      "group": "enrollments"
+    },
+    {
+      "title": "Missing resource (must fail)",
+      "method": "GET",
+      "path": "/api/courses/64b7f9f2f1f1f1f1f1f1f1f1",
+      "status": 404,
+      "statusText": "Not Found",
+      "passed": true,
+      "expected": 404,
+      "durationMs": 2,
+      "requestBody": null,
+      "responseBody": {
+        "success": false,
+        "message": "No course found with id 64b7f9f2f1f1f1f1f1f1f1f1"
+      },
+      "group": "courses"
+    }
+  ]
+}

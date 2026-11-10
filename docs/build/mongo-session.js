@@ -1,0 +1,30 @@
+// docs/build/mongo-session.js
+// Prints a short, readable MongoDB session used for the "database" screenshot.
+const dbName = 'edunova_lms';
+print('MongoDB shell version v8.3.11');
+print(`connecting to: mongodb://127.0.0.1:27017/${dbName}`);
+print('');
+print('> show dbs');
+const sizes = { admin: '40.00', config: '12.00', edunova_lms: '360.00' };
+Object.keys(sizes).forEach((name) => print(`${name.padEnd(14)} ${sizes[name]} KiB`));
+print('');
+print(`> use ${dbName}`);
+print(`switched to db ${dbName}`);
+print('');
+print('> show collections');
+db.getCollectionNames().sort().forEach((c) => print(c));
+print('');
+print('> db.users.countDocuments({ role: "instructor" })');
+print(db.users.countDocuments({ role: 'instructor' }));
+print('');
+print('> db.users.findOne({ role: "instructor" }, { name: 1, email: 1, role: 1 })');
+printjson(db.users.findOne({ role: 'instructor' }, { name: 1, email: 1, role: 1 }));
+print('');
+print('> db.courses.find({ published: true }, { title: 1, code: 1, price: 1 }).limit(3)');
+printjson(db.courses.find({ published: true }, { title: 1, code: 1, price: 1 }).limit(3).toArray());
+print('');
+print('> db.courses.getIndexes()');
+printjson(db.courses.getIndexes().map((i) => ({ name: i.name, key: i.key, unique: !!i.unique })));
+print('');
+print('> db.enrollments.aggregate([{ $group: { _id: "$status", n: { $sum: 1 } } }])');
+printjson(db.enrollments.aggregate([{ $group: { _id: '$status', n: { $sum: 1 } } }]).toArray());

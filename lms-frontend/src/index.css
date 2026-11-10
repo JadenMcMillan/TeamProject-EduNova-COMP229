@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-800 font-sans;
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-brand-900;
+  }
+
+  /* Consistent focus ring for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500/60 ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1180px] px-5 sm:px-8;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm text-ink-800
+      placeholder:text-ink-400 transition focus:border-brand-400 focus:outline-none
+      focus:ring-4 focus:ring-brand-500/10 disabled:bg-ink-100 disabled:text-ink-500;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[13px] font-semibold text-ink-700;
+  }
+
+  .card {
+    @apply rounded-xl2 border border-ink-200/80 bg-white shadow-card;
+  }
+}
+
+/* Thin, unobtrusive scrollbars inside scroll areas */
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
