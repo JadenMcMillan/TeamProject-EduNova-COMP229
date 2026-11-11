@@ -1,0 +1,740 @@
+{
+  "info": {
+    "_collection_link": "https://go.postman.co/collection/58883447-bdf0c26c-e8d2-4cd8-9c6e-c55db1a52cef?source=collection_link",
+    "_exporter_id": "58883447",
+    "_postman_id": "bdf0c26c-e8d2-4cd8-9c6e-c55db1a52cef",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "name": "EduNova API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "health"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/health"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login Admin",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"email\": \"admin@edunova.dev\",\r\n  \"password\": \"Password123\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/login"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "profile",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "me"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/me"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "profile - no token",
+      "request": {
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "me"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/me"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login - wrong password",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"email\": \"admin@edunova.dev\",\r\n  \"password\": \"wrongpass1\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/login"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "student",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"email\": \"mia@student.dev\",\r\n  \"password\": \"Password123\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/login"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create course - student (403)",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1dzm}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"title\": \"Intro to JavaScript\",\r\n  \"code\": \"JS-101\",\r\n  \"description\": \"Learn the basics of JavaScript for web pages.\",\r\n  \"category\": \"Web Development\",\r\n  \"level\": \"beginner\",\r\n  \"price\": 50,\r\n  \"capacity\": 30\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "instructor",
+      "request": {
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"email\": \"lena@edunova.dev\",\r\n  \"password\": \"Password123\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/auth/login"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create course",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_07fo}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"title\": \"Intro to JavaScript\",\r\n  \"code\": \"JS-101\",\r\n  \"description\": \"Learn the basics of JavaScript for web pages.\",\r\n  \"category\": \"Web Development\",\r\n  \"level\": \"beginner\",\r\n  \"price\": 50,\r\n  \"capacity\": 30\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all courses",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_07fo}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get one course",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{auth_secret_06hf}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses",
+            "6af1402b43c16ed73c62838e"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses/6af1402b43c16ed73c62838e"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update course",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_07fo}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"title\": \"Intro to JavaScript - Part 1\",\r\n  \"price\": 40,\r\n  \"published\": true\r\n}"
+        },
+        "header": [],
+        "method": "PUT",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses",
+            "6af1402b43c16ed73c62838e"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses/6af1402b43c16ed73c62838e"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Student",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1dzm}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"courseId\": \"6af1402b43c16ed73c62838e\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "enrollments"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/enrollments"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get my enrollments",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1dzm}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "enrollments",
+            "me"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/enrollments/me"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update enrollment",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1dzm}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"progress\": 50\r\n}"
+        },
+        "header": [],
+        "method": "PUT",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "enrollments",
+            "6af1470d43c16ed73c62838f"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/enrollments/6af1470d43c16ed73c62838f"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete enrollment",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1dzm}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "DELETE",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "enrollments",
+            "6af1470d43c16ed73c62838f"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/enrollments/6af1470d43c16ed73c62838f"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete course",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_07fo}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "DELETE",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "courses",
+            "6af1402b43c16ed73c62838e"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/courses/6af1402b43c16ed73c62838e"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create user",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"name\": \"Sara Test\",\r\n  \"email\": \"sara.test@student.dev\",\r\n  \"password\": \"Test12345\",\r\n  \"role\": \"student\"\r\n}"
+        },
+        "header": [],
+        "method": "POST",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "users"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/users"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all users",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "users"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/users"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get one user",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "GET",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "users",
+            "6af14cf243c16ed73c628390"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/users/6af14cf243c16ed73c628390"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update user",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "body": {
+          "mode": "raw",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "raw": "{\r\n  \"name\": \"Sara Test Updated\",\r\n  \"role\": \"instructor\",\r\n  \"bio\": \"Test user for API testing\"\r\n}"
+        },
+        "header": [],
+        "method": "PUT",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "users",
+            "6af14cf243c16ed73c628390"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/users/6af14cf243c16ed73c628390"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete user",
+      "request": {
+        "auth": {
+          "bearer": [
+            {
+              "key": "token",
+              "type": "string",
+              "value": "{{json_web_token_1bkq}}"
+            }
+          ],
+          "type": "bearer"
+        },
+        "header": [],
+        "method": "DELETE",
+        "url": {
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "api",
+            "users",
+            "6af14cf243c16ed73c628390"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "raw": "http://localhost:5000/api/users/6af14cf243c16ed73c628390"
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_1bkq",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1dzm",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_07fo",
+      "secret": true
+    }
+  ]
+}
