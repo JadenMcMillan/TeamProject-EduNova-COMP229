@@ -1,22 +1,6 @@
-# Project Overview
-
-EduNova is a Learning Management System (LMS) developed for the COMP229 Web Application Development course. It provides role-based access for students, instructors, and administrators, supporting course management, enrollment, progress tracking, and academic administration.
-
 # EduNova LMS — Part B · First Release
 
 A Learning Management System built with a **React 18 + Tailwind CSS** frontend on top of a **Node.js + Express + MongoDB (Mongoose)** backend that follows the **MVC** pattern, with JWT authentication, role-based authorisation.
-
-# Project Structure
-
-The EduNova LMS project is organized into the following main directories:
-
-lms-frontend/ – Contains the React application, user interface components, pages, and frontend functionality.
-
-lms-backend/ – Contains the Node.js and Express API, database models, controllers, routes, and authentication logic.
-
-docs/ – Contains project documentation, screenshots, API testing resources, and supporting materials.
-
-This structure separates frontend development, backend operations, and documentation, making the project easier to understand and maintain.
 
 ## Quick start (frontend + backend)
 
